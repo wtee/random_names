@@ -1,0 +1,3 @@
+[run]
+source = random_names
+omit = random_names/test*
