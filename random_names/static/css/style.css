@@ -1,0 +1,34 @@
+/* === Typography === */
+html {
+    font-size: 1rem;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+button,
+p,
+select {
+    font-size: 1.5rem;
+}
+
+h1 {
+    font-size: 2.5rem;
+}
+
+.name-result {
+    font-size:1.75rem;
+}
+
+/* === Layout === */
+
+body {
+    display: grid;
+    grid-template-columns: 20% 60% 20%;
+}
+
+main {
+    grid-column-start: 2;
+    grid-column-end: 3;
+}
+
+/* === Color === */
+

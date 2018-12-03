@@ -1,0 +1,35 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ request.static_url('random_names:static/css/normalize.min.css') }}" />
+    <link rel="stylesheet" href="{{ request.static_url('random_names:static/css/style.css') }}" />
+    <meta property="og:url" content="{{ request.url }}" />
+    <meta property="og:title" content="{{ title }}">
+    <meta property="og:description" content="{{ description }}" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@beardbrarian" />
+    <meta name="twitter:creator" content="@beardbrarian" />
+    <title>{{ title }}</title>
+</head>
+<body>
+    <main>
+        <header>
+            <h1>Generate {{ title }}</h1>
+            <p>{{ description | safe }}</p>
+        </header>
+        <p class="name-result"><strong>{{ first_name }} {{ surname }}</strong></p>
+        <form type="POST" action="{{ request.route_url('american', gender=gender) }}">
+            <select name="gender">
+                <option value="{{ options[0] }}">{{ options[0].title() }}</option>
+                <option value="{{ options[1] }}">{{ options[1].title() }}</option>
+                <option value="{{ options[2] }}">{{ options[2].title() }}</option>
+                <option value="{{ options[3] }}">{{ options[3].title() }}</option>
+            </select>
+            <br />
+            <br />
+            <button type="submit">Generate a name</button>
+        </form>
+    </main>
+</body>
+</html>
