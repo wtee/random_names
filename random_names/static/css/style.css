@@ -5,6 +5,7 @@ html {
 }
 
 button,
+label,
 p,
 select {
     font-size: 1.5rem;
