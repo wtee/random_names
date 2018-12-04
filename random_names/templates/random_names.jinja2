@@ -18,8 +18,8 @@
             <h1>Generate {{ title }}</h1>
             <p>{{ description | safe }}</p>
         </header>
-        <p class="name-result"><strong>{{ first_name }} {{ surname }}</strong></p>
         <form type="POST" action="{{ request.route_url('american', gender=gender) }}">
+            <label for="gender">Select a gender</label>
             <select name="gender">
                 <option value="{{ options[0] }}">{{ options[0].title() }}</option>
                 <option value="{{ options[1] }}">{{ options[1].title() }}</option>
@@ -28,8 +28,19 @@
             </select>
             <br />
             <br />
+            <label for="number">How many names?</label>
+            <select name="number">
+            {% for n in numbers %}
+                <option value="{{ n }}">{{ n }}</option>
+            {% endfor %}
+            </select>
+            <br />
+            <br />
             <button type="submit">Generate a name</button>
         </form>
+        {% for name in names %}
+            <p class="name-result"><strong>{{ name }}</strong></p>
+        {% endfor %}
     </main>
 </body>
 </html>
