@@ -80,7 +80,7 @@ def html_view(request):
 def data_view(request):
     return {"female_names": tuple(female_first_names),
             "male_names": tuple(male_first_names),
-            "gender_non_specific_names": tuple(androgynous_first_names),
+            "gender_non_specific_names": tuple(no_gender_first_names),
             "surnames": tuple(surnames)}
 
 
