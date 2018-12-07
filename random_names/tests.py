@@ -58,7 +58,34 @@ class ViewTests(unittest.TestCase):
         self.assertTupleEqual(tuple(male_first_names), info["male_names"])
         self.assertTupleEqual(tuple(no_gender_first_names), info["gender_non_specific_names"])
         self.assertTupleEqual(tuple(surnames), info["surnames"])
-    
+
+    def test_min_enforcement(self):
+        minimum = 1
+        params1 = {"gender": "any gender"}
+        request1 = testing.DummyRequest(params=params1, path="/american.html")
+        info1 = handle_request(request1)
+
+        self.assertEqual(minimum,  len(info1["names"]))
+        self.assertTrue(minimum == info1["numbers"][0])
+
+        params2 = {"gender": "any gender", "number": -10}
+        request2 = testing.DummyRequest(params=params2, path="/american.html")
+        info2 = handle_request(request2)
+
+        self.assertEqual(minimum, len(info2["names"]))
+        self.assertTrue(minimum == info2["numbers"][0])
+
+
+    def test_max_enforcement(self):
+        maximum = 100
+        params = {"gender": "female", "number": 1000}
+        request = testing.DummyRequest(params=params, path="/american.html")
+        info = handle_request(request)
+
+        self.assertEqual(maximum, len(info["names"]))
+        self.assertTrue(maximum == info["numbers"][0])
+
+
 """
 class FunctionalTests(unittest.TestCase):
     def setUp(self):
