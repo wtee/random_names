@@ -31,5 +31,17 @@ main {
     grid-column-end: 3;
 }
 
+
 /* === Color === */
+
+/* === Media Queries === */
+
+@media (max-width: 700px) {
+
+    /* == Layout == */
+    
+    body {
+        grid-template-columns: 5% 90% 5%;
+    }
+}
 
