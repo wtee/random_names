@@ -44,9 +44,10 @@ class ViewTests(unittest.TestCase):
         params = {"gender": "female", "number": 10}
         request = testing.DummyRequest(params=params, path="/american.txt")
         info = handle_request(request)
-        first, last = info["names"][0].split(" ")
+        names = [name for name in info.body.decode("utf8").split("\n")]
+        first, last = names[0].split(" ")
 
-        self.assertEqual(params["number"], len(info["names"]))
+        self.assertEqual(params["number"], len(names))
         self.assertTrue(first in female_first_names)
         self.assertTrue(last in surnames)
 
