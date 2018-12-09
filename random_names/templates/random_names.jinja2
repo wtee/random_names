@@ -19,7 +19,7 @@
             <h1>Generate {{ title }}</h1>
             <p>{{ description | safe }}</p>
         </header>
-        <form type="POST" action="{{ request.route_url('american', gender=gender) }}">
+        <form type="POST" action="{{ request.route_url(route, gender=gender) }}">
             <label for="gender">Select a gender
                 <select name="gender">
                     <option value="{{ options[0] }}">{{ options[0].title() }}</option>
