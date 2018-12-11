@@ -1,12 +1,15 @@
 import unittest
 
+from webtest import app as TestApp
 from pyramid import testing
 
-from .views.base import handle_request
+from .views.base import _handle_request
 from .views import american_data as ad
 from .views import scottish_data as sd
 from .views import american as am
 from .views import scottish as sc
+from random_names import main
+
 
 class AmericanViewTests(unittest.TestCase):
     def setUp(self):
@@ -41,6 +44,19 @@ class AmericanViewTests(unittest.TestCase):
         self.assertTrue("description" in info.keys())
         self.assertTrue(info["options"][0] == params["gender"])
         self.assertTrue(info["numbers"][0] == params["number"])
+    
+    def test_text(self):
+        params = {"gender": "female", "number": 5}
+        request = testing.DummyRequest(params=params, path="/american.txt")
+        res = am.text_view(request)
+        names = res.body.decode("utf-8").split("\n")
+        first, last = names[0].split(" ")
+
+        self.assertEqual(res.content_type, "text/plain")
+        self.assertEqual(res.charset, "utf-8")
+        self.assertEqual(len(names), params["number"])
+        self.assertTrue(first in ad.female_first_names)
+        self.assertTrue(last in ad.surnames)
 
 
 class ScottishViewTests(unittest.TestCase):
@@ -77,6 +93,19 @@ class ScottishViewTests(unittest.TestCase):
         self.assertTrue(info["options"][0] == params["gender"])
         self.assertTrue(info["numbers"][0] == params["number"])
 
+    def test_text(self):
+        params = {"gender": "female", "number": 5}
+        request = testing.DummyRequest(params=params, path="/scottish.txt")
+        res = sc.text_view(request)
+        names = res.body.decode("utf-8").split("\n")
+        first, last = names[0].split(" ")
+
+        self.assertEqual(res.content_type, "text/plain")
+        self.assertEqual(res.charset, "utf-8")
+        self.assertEqual(len(names), params["number"])
+        self.assertTrue(first in sd.female_first_names)
+        self.assertTrue(last in sd.surnames)
+
 
 class HandleRequestTests(unittest.TestCase):
     def setUp(self):
@@ -93,7 +122,7 @@ class HandleRequestTests(unittest.TestCase):
         params = {"gender": "gender non-specific", "number": 1}
 
         request = testing.DummyRequest(params=params, path="/american.json")
-        info = handle_request(request, ad.female_first_names, ad.male_first_names, ad.no_gender_first_names, ad.both_first_names, ad.surnames)
+        info = _handle_request(request, ad.female_first_names, ad.male_first_names, ad.no_gender_first_names, ad.both_first_names, ad.surnames)
         first, last = info["names"][0].split(" ")
 
         self.assertEqual(params["number"], len(info["names"]))
@@ -103,7 +132,7 @@ class HandleRequestTests(unittest.TestCase):
     def test_text(self):
         params = {"gender": "female", "number": 10}
         request = testing.DummyRequest(params=params, path="/american.txt")
-        info = handle_request(request, ad.female_first_names, ad.male_first_names, ad.no_gender_first_names, ad.both_first_names, ad.surnames)
+        info = _handle_request(request, ad.female_first_names, ad.male_first_names, ad.no_gender_first_names, ad.both_first_names, ad.surnames)
         first, last = info["names"][0].split(" ")
 
         self.assertEqual(params["number"], len(info["names"]))
@@ -114,14 +143,14 @@ class HandleRequestTests(unittest.TestCase):
         minimum = 1
         params1 = {"gender": "any gender"}
         request1 = testing.DummyRequest(params=params1, path="/american.html")
-        info1 = handle_request(request1, sd.female_first_names, sd.male_first_names, sd.no_gender_first_names, sd.both_first_names, sd.surnames)
+        info1 = _handle_request(request1, ad.female_first_names, ad.male_first_names, ad.no_gender_first_names, ad.both_first_names, ad.surnames)
 
         self.assertEqual(minimum,  len(info1["names"]))
         self.assertTrue(minimum == info1["numbers"][0])
 
         params2 = {"gender": "any gender", "number": -10}
         request2 = testing.DummyRequest(params=params2, path="/american.html")
-        info2 = handle_request(request2, sd.female_first_names, sd.male_first_names, sd.no_gender_first_names, sd.both_first_names, sd.surnames)
+        info2 = _handle_request(request2, ad.female_first_names, ad.male_first_names, ad.no_gender_first_names, ad.both_first_names, ad.surnames)
 
         self.assertEqual(minimum, len(info2["names"]))
         self.assertTrue(minimum == info2["numbers"][0])
@@ -130,7 +159,7 @@ class HandleRequestTests(unittest.TestCase):
         maximum = 100
         params = {"gender": "female", "number": 1000}
         request = testing.DummyRequest(params=params, path="/american.html")
-        info = handle_request(request, sd.female_first_names, sd.male_first_names, sd.no_gender_first_names, sd.both_first_names, sd.surnames)
+        info = _handle_request(request, ad.female_first_names, ad.male_first_names, ad.no_gender_first_names, ad.both_first_names, ad.surnames)
 
         self.assertEqual(maximum, len(info["names"]))
         self.assertTrue(maximum == info["numbers"][0])
@@ -138,12 +167,14 @@ class HandleRequestTests(unittest.TestCase):
 """
 class FunctionalTests(unittest.TestCase):
     def setUp(self):
-        from random_names import main
-        app = main({})
-        from webtest import TestApp
-        self.testapp = TestApp(app)
+        app_ = main({})
+        self.testapp = app.TestApp(app_)
 
     def test_root(self):
         res = self.testapp.get('/', status=200)
         self.assertTrue(b'Pyramid' in res.body)
+
+    def test_american_html(self):
+        res = self.testapp.get('/american.html', status=200)
+        self.assertTrue(b"First names are from the" in res.body)
 """

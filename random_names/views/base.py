@@ -1,6 +1,8 @@
 import random
 
-def handle_request(request, female_first_names, male_first_names, no_gender_first_names, both_first_names, surnames):
+from pyramid.response import Response
+
+def _handle_request(request, female_first_names, male_first_names, no_gender_first_names, both_first_names, surnames):
     gender_options = ("any gender", "female", "male", "gender non-specific")
 
     if 'number' not in request.GET:
@@ -37,3 +39,27 @@ def handle_request(request, female_first_names, male_first_names, no_gender_firs
     names = [" ".join([first, last]) for first, last in zip(firsts, lasts)]
 
     return {"names": names, "options": return_options, "numbers": return_numbers}
+
+
+def _data_view(request, female_first_names, male_first_names, no_gender_first_names, both_first_names, surnames):
+    return {"female_names": tuple(female_first_names),
+            "male_names": tuple(male_first_names),
+            "gender_non_specific_names": tuple(no_gender_first_names),
+            "surnames": tuple(surnames)}
+
+
+def _json_view(request, female_first_names, male_first_names, no_gender_first_names, both_first_names, surnames):
+    names_dict = {}
+    names_dict["names"] = _handle_request(request,
+                                female_first_names,
+                                male_first_names,
+                                no_gender_first_names,
+                                both_first_names,
+                                surnames)["names"]
+
+
+def _text_view(request, female_first_names, male_first_names, no_gender_first_names, both_first_names, surnames):
+    names_string = "\n".join(_handle_request(request, female_first_names, male_first_names, no_gender_first_names, both_first_names, surnames)["names"])
+    return Response(content_type="text/plain",
+                    charset="utf-8",
+                    body=names_string)
