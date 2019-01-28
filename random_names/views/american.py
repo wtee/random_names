@@ -2,7 +2,7 @@ from pyramid.view import view_config
 from pyramid.response import Response
 
 from .base import _data_view, _handle_request, _json_view, _text_view
-from .american_data import female_first_names, male_first_names, no_gender_first_names, both_first_names, surnames
+from random_names.data.american_data import female_first_names, male_first_names, no_gender_first_names, both_first_names, surnames
 
 @view_config(route_name="american", renderer="../templates/random_names.jinja2")
 def html_view(request):

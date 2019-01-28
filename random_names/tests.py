@@ -4,8 +4,8 @@ from webtest import app as TestApp
 from pyramid import testing
 
 from .views.base import _handle_request
-from .views import american_data as ad
-from .views import scottish_data as sd
+from .data import american_data as ad
+from .data import scottish_data as sd
 from .views import american as am
 from .views import scottish as sc
 from random_names import main

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ request.static_url('random_names:static/css/normalize.min.css') }}" />
+    <link rel="stylesheet" href="{{ request.static_url('random_names:static/css/style.css') }}" />
+    <meta property="og:url" content="{{ request.url }}" />
+    <meta property="og:title" content="{{ title }}">
+    <meta property="og:description" content="{{ description }}" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@beardbrarian" />
+    <meta name="twitter:creator" content="@beardbrarian" />
+    <title>{{ title }}</title>
+</head>
+<body>
+    <main>
+        {% block content %}
+        {% endblock content %}
+    </main>
+</body>
+</html>
