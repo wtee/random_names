@@ -1,22 +1,63 @@
 /* === Typography === */
+@font-face {
+    font-family: 'quicksandbold';
+    src: url('../fonts/quicksand-bold-webfont.woff2') format('woff2'),
+         url('../fonts/quicksand-bold-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'josefin_sansregular';
+    src: url('../fonts/josefinsans-regular-webfont.woff2') format('woff2'),
+         url('../fonts/josefinsans-regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'josefinsans_bolditalic';
+    src: url('../fonts/josefinsans-bolditalic-webfont.woff2') format('woff2'),
+         url('../fonts/josefinsans-bolditalic-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 html {
     font-size: 1rem;
-    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-family: 'josefin_sansregular', sans-serif;
 }
 
 button,
 label,
 p,
-select {
+select,
+li {
     font-size: 1.5rem;
 }
 
 h1 {
-    font-size: 2.5rem;
+    font-size: 2.75rem;
+}
+
+h2 {
+    font-size: 2.1rem;
 }
 
 .name-result {
     font-size:1.75rem;
+}
+
+footer p {
+    font-size: 1.25rem;
+}
+
+.highlight-text {
+    font-family: 'josefinsans_bolditalic', sans-serif;
+}
+
+.kofi {
+    font-family: 'quicksandbold', sans-serif;
 }
 
 /* === Layout === */
@@ -31,8 +72,42 @@ main {
     grid-column-end: 3;
 }
 
+footer {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    margin-top: 5rem;
+}
+
+.kofi {
+    height: 1.5rem;
+    display:inline-block;
+    padding: 0.75rem;
+    border-radius: 5px;
+}
+
+.kofi img {
+    max-height: 80%;
+    margin-right: 0.75rem;
+}
 
 /* === Color === */
+
+html {
+    background-color: #ffffff;
+}
+
+.kofi {
+    background-color: #46b798;
+    color: #ffffff;
+}
+
+.highlight-text {
+    color: #007ba7;
+}
+
+.bottom-border {
+    border-bottom: 1rem double #fedf00;
+}
 
 /* === Media Queries === */
 

@@ -1,0 +1,17 @@
+{% extends "base.jinja2" %}
+{% block content %}
+<header class="bottom-border">
+    <h1 class="highlight-text"> {{ title }}</h1>
+</header>
+<p>Welcome! Need a random name? Try one of the random name generators here.
+Currently there are options for generating <a href="american.html">American</a>
+and <a href="scottish.html">Scottish</a> names.</p>
+<p>Know of freely reusable name data for a country or language community not
+represented here? I'd love to hear from you. Shoot me an
+email at <a href="mailto:wteal@fastmail.com">wteal@fastmail.com</a>.</p>
+<h2 class="highlight-text">Random name generators:</h2>
+<ul>
+    <li><a href="american.html">Random American name generator</a></li>
+    <li><a href="scottish.html">Random Scottish name generator</a></li>
+</ul>
+{% endblock content %}

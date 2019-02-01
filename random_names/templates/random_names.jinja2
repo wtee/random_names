@@ -1,9 +1,9 @@
     {% extends "base.jinja2" %}
     {% block content %}
-        <header>
-            <h1>Generate {{ title }}</h1>
-            <p>{{ description | safe }}</p>
+        <header class="bottom-border">
+            <h1 class="highlight-text">Generate {{ title }}</h1>
         </header>
+        <p>{{ description | safe }}</p>
         <form type="POST" action="{{ request.route_url(route, gender=gender) }}">
             <label for="gender">Select a gender
                 <select name="gender">
